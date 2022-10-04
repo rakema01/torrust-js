@@ -92,10 +92,27 @@ class Torrust {
                 }, reject)
         })
     }
-    downloadTorrent(id){
+    downloadTorrentFile(id, path){
         return new Promise((resolve, reject) => {
+            if(fs.existsSync(`${path}/${id}.torrent`) || fs.existsSync(`${path}/${id}.torrent.downloading`)){
+                reject("Torrent already exists or is already downloading.");
+                return;
+            }
             this.get(`/api/torrent/download/${id}`, this.token)
-                .then(resolve, reject)
+                .then((res) => {
+                    const file = fs.createWriteStream(`${path}/${id}.torrent.downloading`);
+                    res.pipe(file);
+                    res.on('end', () => {
+                        console.log(`${id} finished downloading!`);
+                        setTimeout(() => {
+                            fs.renameSync(`${path}/${id}.torrent.downloading`, `${path}/${id}.torrent`);
+                            resolve(id);
+                        }, 300);
+                    })
+                    res.on("error", () => {
+                        reject(`Error occured while downloading file.`)
+                    })
+                }, reject)
         })
     }
     getTorrents(){
