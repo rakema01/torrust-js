@@ -36,9 +36,11 @@ class Torrust {
     get(path) {
         return new Promise((resolve, reject) => {
             try{
-                https.get(this.getHTTPOptions(path, {"Authorization": `Bearer ${typeof token == "String" && this.token.split(".").length == 3 ? this.token : ""}`}), res => {
-                    if(res.statusCode >= 400){
-                        reject(`Failed to GET ${path}: ${res.statusCode}`);
+                const tokenValidated = typeof this.token == "string" && this.token.split(".").length >= 3 ? this.token : "";
+                https.get(this.getHTTPOptions(path, {"Authorization": `Bearer ${tokenValidated}`}), res => {
+                    if(res.statusCode != 200){
+                        const code = res.statusCode;
+                        reject(errors[code] || code);
                         return;
                     }
                     resolve(res);
