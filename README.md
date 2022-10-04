@@ -6,10 +6,14 @@ You can get started with
 ```js
 const Torrust = require("torrust-js");
 //  Default port should be 443 for HTTPS but can be something else if needed
-const client = new Torrust(hostname, port, username, password);
+const client = new Torrust("username", "password", "torrust.domain.tld", 443);
 
-client.getTorrents()
-  .then(torrents => {
-    console.log(torrents)
-  });
+client.login()
+  .then(() => {
+    console.log(client.token);
+    client.getTorrents()
+      .then(torrents => {
+        console.log(torrents)
+      });
+  })
 ```

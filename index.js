@@ -16,7 +16,7 @@ const parseJSON = (res) => {
 }
 
 class Torrust {
-    constructor(hostname="dl.rpdl.net", port=443, username="", password=""){
+    constructor(username="", password="", hostname="dl.rpdl.net", port=443){
         this.token = null;
         this.username = username;
         this.password = password;
