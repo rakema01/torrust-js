@@ -1,6 +1,6 @@
 {
   "name": "torrust-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A node.js app for interacting with the Torrust API",
   "main": "index.js",
   "scripts": {
