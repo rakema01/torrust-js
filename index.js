@@ -116,9 +116,9 @@ class Torrust {
                 }, reject)
         })
     }
-    getTorrents(){
+    getTorrents(page_size){
         return new Promise((resolve, reject) => {
-            this.get(`/api/torrents`)
+            this.get(`/api/torrents?page_size=${page_size}`)
                 .then((res) => {
                     parseJSON(res)
                         .then(resolve)
