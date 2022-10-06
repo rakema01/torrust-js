@@ -113,7 +113,7 @@ class Torrust {
                         setTimeout(() => {
                             fs.renameSync(`${path}/${id}.torrent.downloading`, `${path}/${id}.torrent`);
                             resolve(id);
-                        }, 300);
+                        }, 500);
                     })
                     res.on("error", () => {
                         reject(`Error occured while downloading file.`)
