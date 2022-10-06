@@ -15,6 +15,11 @@ const parseJSON = (res) => {
             })
     })
 }
+const errors = {
+    403: "Invalid login credentials",
+    404: "Page not found",
+    502: "Bad Gateway"
+}
 
 class Torrust {
     constructor(username="", password="", hostname="dl.rpdl.net", port=443){
