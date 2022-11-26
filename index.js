@@ -20,7 +20,6 @@ const errors = {
     404: "Page not found",
     502: "Bad Gateway"
 }
-
 class Torrust {
     constructor(username="", password="", hostname="dl.rpdl.net", port=443){
         this.token = null;
@@ -28,6 +27,7 @@ class Torrust {
         this.password = password;
         this.hostname = hostname;
         this.port = port;
+        this.errorcodes = errors
     }
     getHTTPOptions(path="/", headers={}, method="GET") {
         const {hostname, port} = this;
@@ -46,7 +46,7 @@ class Torrust {
                 https.get(this.getHTTPOptions(path, {"Authorization": `Bearer ${tokenValidated}`}), res => {
                     if(res.statusCode != 200){
                         const code = res.statusCode;
-                        reject(errors[code] || code);
+                        reject(this.errorcodes[code] || code);
                         return;
                     }
                     resolve(res);
@@ -72,7 +72,7 @@ class Torrust {
                 }
                 if(res.statusCode != 200){
                     const code = res.statusCode;
-                    reject(errors[code] || code);
+                    reject(this.errorcodes[code] || code);
                     return;
                 }
                 parseJSON(res)
