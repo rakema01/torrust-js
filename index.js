@@ -91,7 +91,7 @@ class Torrust {
     }
     getTorrent(id){
         return new Promise((resolve, reject) => {
-            this.get(`/api/torrent/${id}`, this.token)
+            this.get(`/api/torrent/${id}`)
                 .then((res) => {
                     parseJSON(res)
                         .then(resolve)
@@ -104,7 +104,7 @@ class Torrust {
                 reject("Torrent already exists or is already downloading.");
                 return;
             }
-            this.get(`/api/torrent/download/${id}`, this.token)
+            this.get(`/api/torrent/download/${id}`)
                 .then((res) => {
                     const file = fs.createWriteStream(`${path}/${id}.torrent.downloading`);
                     res.pipe(file);
